@@ -13,6 +13,6 @@ enum ThicknessError: Error {
     /// Indicates that the provided thickness is invalid.
     ///
     /// This thickness is invalid because it could not be parsed from the provided string.
-    case invalidThickness
+    case invalidThicknessString
 }
 
