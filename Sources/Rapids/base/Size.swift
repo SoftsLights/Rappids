@@ -11,38 +11,38 @@ public struct Size: Equatable, Hashable {
     public static let Infinity: Size = Size(Double.infinity, Double.infinity)
 
     /// The width.
-    private let width: Double
+    private let _width: Double
 
     /// The height.
-    private let height: Double
+    private let _height: Double
 
     /// Initializes a new instance of the ``Size`` structure.
     /// - Parameters:
     ///   - width: The width.
     ///   - height: The height.
     public init(_ width: Double, _ height: Double) {
-        self.width = width
-        self.height = height
+        _width = width
+        _height = height
     }
 
     /// Gets the aspect ratio of the size.
     public var AspectRatio: Double {
         get {
-            width / height
+            _width / _height
         }
     }
 
     /// Gets the width.
-    public var Width: Double {
+    public var width: Double {
         get {
-            width
+            _width
         }
     }
 
     /// Gets the height.
-    public var Height: Double {
+    public var height: Double {
         get {
-            height
+            _height
         }
     }
 
@@ -70,7 +70,7 @@ public struct Size: Equatable, Hashable {
     ///   - scale: The scaling factor.
     /// - Returns: The scaled size.
     public static func *(_ size: Size, _ scale: Vector) -> Size {
-        Size(size.Width * scale.X, size.Height * scale.Y)
+        Size(size.width * scale.X, size.height * scale.Y)
     }
 
     /// Scales a size.
@@ -79,7 +79,7 @@ public struct Size: Equatable, Hashable {
     ///   - scale: The scaling factor.
     /// - Returns: The scaled size.
     public static func /(_ size: Size, _ scale: Vector) -> Size {
-        Size(size.width / scale.X, size.height / scale.Y)
+        Size(size._width / scale.X, size._height / scale.Y)
     }
 
     /// Divides a size by another size to produce a scaling factor.
@@ -88,7 +88,7 @@ public struct Size: Equatable, Hashable {
     ///   - right: The second size.
     /// - Returns: The scaled size.
     public static func /(_ left: Size, _ right: Size) -> Vector {
-        Vector(left.width / right.width, left.height / right.height)
+        Vector(left._width / right._width, left._height / right._height)
     }
 
     /// Scales a size.
@@ -97,7 +97,7 @@ public struct Size: Equatable, Hashable {
     ///   - scale: The scaling factor.
     /// - Returns: The scaled size.
     public static func *(_ size: Size, _ scale: Double) -> Size {
-        Size(size.width * scale, size.height * scale)
+        Size(size._width * scale, size._height * scale)
     }
 
     /// Scales a size.
@@ -106,7 +106,7 @@ public struct Size: Equatable, Hashable {
     ///   - scale: The scaling factor.
     /// - Returns: The scaled size.
     public static func /(_ size: Size, _ scale: Double) -> Size {
-        Size(size.width / scale, size.height / scale)
+        Size(size._width / scale, size._height / scale)
     }
 
     /// Adds two sizes (widths and heights are added to each other respectively).
@@ -115,7 +115,7 @@ public struct Size: Equatable, Hashable {
     ///   - toAdd: The size to add.
     /// - Returns: The sum of the sizes.
     public static func +(_ size: Size, _ toAdd: Size) -> Size {
-        Size(size.width + toAdd.width, size.height + toAdd.height)
+        Size(size._width + toAdd._width, size._height + toAdd._height)
     }
 
     /// Subtracts two sizes (widths and heights are subtracted from each other respectively).
@@ -124,7 +124,7 @@ public struct Size: Equatable, Hashable {
     ///   - toSubtract: The size to subtract.
     /// - Returns: The difference of the sizes.
     public static func -(_ size: Size, _ toSubtract: Size) -> Size {
-        Size(size.width - toSubtract.width, size.height - toSubtract.height)
+        Size(size._width - toSubtract._width, size._height - toSubtract._height)
     }
 
     /// Parses a ``Size`` string.
@@ -147,8 +147,8 @@ public struct Size: Equatable, Hashable {
     ///   - constraint: The size to constraint to.
     /// - Returns: The constrained size.
     public func constrain(_ constraint: Size) -> Size {
-        let constrainedWidth: Double = min(width, constraint.width)
-        let constrainedHeight: Double = min(height, constraint.height)
+        let constrainedWidth: Double = min(_width, constraint._width)
+        let constrainedHeight: Double = min(_height, constraint._height)
 
         return Size(constrainedWidth, constrainedHeight)
     }
@@ -158,8 +158,8 @@ public struct Size: Equatable, Hashable {
     /// - Returns: The deflated size.
     /// - Remark: The deflated size cannot be less than 0.
     public func deflate(_ thickness: Thickness) -> Size {
-        let deflatedWidth: Double = max(0, width - thickness.left - thickness.right)
-        let deflatedHeight: Double = max(0, height - thickness.top - thickness.bottom)
+        let deflatedWidth: Double = max(0, _width - thickness.left - thickness.right)
+        let deflatedHeight: Double = max(0, _height - thickness.top - thickness.bottom)
 
         return Size(deflatedWidth, deflatedHeight)
     }
@@ -168,7 +168,7 @@ public struct Size: Equatable, Hashable {
     /// - Parameter other: The other size to test equality against.
     /// - Returns: True if this size is equal to other; False otherwise.
     public func equals(_ other: Size) -> Bool {
-        other.width == width && other.height == height
+        other._width == _width && other._height == _height
     }
 
     /// This function determines if two `Double` values are approximately equal within a certain tolerance.
@@ -187,7 +187,7 @@ public struct Size: Equatable, Hashable {
     /// - Parameter other: The other size to test equality against.
     /// - Returns: True if this size is equal to other; False otherwise.
     public func nearlyEquals(_ other: Size) -> Bool {
-        areClose(width, other.width) && areClose(height, other.height)
+        areClose(_width, other._width) && areClose(_height, other._height)
     }
 
     /// Checks for equality between a size and an object.
@@ -206,8 +206,8 @@ public struct Size: Equatable, Hashable {
     public func getHashCode() -> Int {
         var hash: Int = 17
 
-        hash = (hash * 23) + width.hashValue
-        hash = (hash * 23) + height.hashValue
+        hash = (hash * 23) + _width.hashValue
+        hash = (hash * 23) + _height.hashValue
 
         return hash
     }
@@ -216,8 +216,8 @@ public struct Size: Equatable, Hashable {
     /// - Parameter thickness: The thickness.
     /// - Returns: The inflated size.
     public func inflate(_ thickness: Thickness) -> Size {
-        let inflatedWidth: Double = width + thickness.left + thickness.right
-        let inflatedHeight: Double = height + thickness.top + thickness.bottom
+        let inflatedWidth: Double = _width + thickness.left + thickness.right
+        let inflatedHeight: Double = _height + thickness.top + thickness.bottom
 
         return Size(inflatedWidth, inflatedHeight)
     }
@@ -226,20 +226,20 @@ public struct Size: Equatable, Hashable {
     /// - Parameter width: The width.
     /// - Returns: The new ``Size``.
     public func withWidth(_ width: Double) -> Size {
-        Size(width, height)
+        Size(width, _height)
     }
 
     /// Returns a new ``Size``with the same width and specified height.
     /// - Parameter height: The height.
     /// - Returns: The new ``Size``.
     public func withHeight(_ height: Double) -> Size {
-        Size(width, height)
+        Size(_width, height)
     }
 
     /// Returns the string representation of the size.
     /// - Returns: The string representation of the size.
     public func toString() -> String {
-        "\(width), \(height)"
+        "\(_width), \(_height)"
     }
 
     /// Deconstructs the size into its Width and Height values.
@@ -247,12 +247,12 @@ public struct Size: Equatable, Hashable {
     ///   - width: The width.
     ///   - height: The height.
     public func deconstruct(width: inout Double, height: inout Double) {
-        width = self.width
-        height = self.height
+        width = self._width
+        height = self._height
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(width)
-        hasher.combine(height)
+        hasher.combine(_width)
+        hasher.combine(_height)
     }
 }

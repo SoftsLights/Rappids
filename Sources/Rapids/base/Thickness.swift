@@ -138,7 +138,7 @@ public struct Thickness: Equatable, Hashable {
     ///   - right: The size.
     /// - Returns: The sum of the thickness and the size.
     public static func +(_ left: Thickness, _ right: Size) -> Size {
-        Size(left._left + right.Width + left._right, left._top + right.Height + left._bottom)
+        Size(left._left + right.width + left._right, left._top + right.height + left._bottom)
     }
 
     /// Subtracts a ``Thickness`` from a ``Size``.
@@ -147,7 +147,7 @@ public struct Thickness: Equatable, Hashable {
     ///   - right: The size.
     /// - Returns: The difference between the thickness and the size.
     public static func -(_ left: Thickness, _ right: Size) -> Size {
-        Size(left._left - right.Width - left._right, left._top - right.Height - left._bottom)
+        Size(left._left - right.width - left._right, left._top - right.height - left._bottom)
     }
 
     /// Parses a ``Thickness`` string.
