@@ -247,8 +247,8 @@ public struct Size: Equatable, Hashable {
     ///   - width: The width.
     ///   - height: The height.
     public func deconstruct(width: inout Double, height: inout Double) {
-        width = self._width
-        height = self._height
+        width = _width
+        height = _height
     }
 
     public func hash(into hasher: inout Hasher) {
